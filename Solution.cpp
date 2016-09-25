@@ -76,7 +76,7 @@ private:
         
         for (int i = 0; i < v.size(); i++) {
             if (v[i] != v_unsorted[i]) {
-                for (int j = i + 1; j < v.size(); j++) {
+                for (int j = v.size() - 1; j >= i + 1; j--) {
                     if (v[i] == v_unsorted[j]) {
                         insertAt = i;
                         takeFrom = j;
