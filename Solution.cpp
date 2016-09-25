@@ -108,6 +108,11 @@ public:
 int main() {
     ToSmallest t;
     cout << toString(t.smallest(187863002809)) << endl;
-
+    cout << toString(t.smallest(261235)) << endl;
+    cout << toString(t.smallest(209917)) << endl;
+    cout << toString(t.smallest(285365)) << endl;
+    cout << toString(t.smallest(269045)) << endl;
+    cout << toString(t.smallest(296837)) << endl;
+    cout << toString(t.smallest(1717466)) << endl;
     return 0;
 }
