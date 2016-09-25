@@ -47,20 +47,31 @@ private:
     
     static vector<long long> sendBackward(long long n) {
         vector<long long> v = vectorize(n);
-        
-        int takeFrom = 0;
-        int insertAt = 0;
-        int i = 0;
-        
-        while (i+1 < v.size() && v[i+1] <= v[i]) {
-            swap(v[i], v[i+1]);
-            insertAt++;
-            i++;
-        }
-        
+        cout << toString(v) << endl;
+        vector<long long> v_unsorted = v;
+        sort(begin(v), end(v));
         cout << toString(v) << endl;
         
-        vector<long long> ans = {numberize(v), takeFrom, insertAt};
+        int takeFrom;
+        int insertAt;
+        
+        for (int i = v.size() - 1; i >= 0; i--) {
+            if (v[i] != v_unsorted[i]) {
+                for (int j = 0; j < i; j++) {
+                    if (v[i] == v_unsorted[j]) {
+                        insertAt = i;
+                        takeFrom = j;
+                        j = v.size();
+                        i = -1;
+                    }
+                }
+            }
+        }
+        for (int i = takeFrom; i < insertAt; i++) {
+            swap(v_unsorted[i], v_unsorted[i + 1]);
+            cout << toString(v_unsorted) << endl;
+        }
+        vector<long long> ans = {numberize(v_unsorted), takeFrom, insertAt};
         return ans;
     }
     
