@@ -1,11 +1,10 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 #include <limits.h>
 
 using namespace std;
 
-
+// Debugging helper function
 string toString(vector<long long> v) {
     string ans = "{";
     for (long long i: v) {
@@ -17,6 +16,10 @@ string toString(vector<long long> v) {
 
 class ToSmallest {
 private:
+    /**
+     * Given a long long int n, return as a vector
+     * e.g. vectorize(1234) -> {1,2,3,4}
+     */
     static vector<long long> vectorize(long long n) {
         vector<long long> rev_ans;
         while (n) {
@@ -30,7 +33,11 @@ private:
         }
         return ans;
     }
-
+    
+    /**
+     * Given a vector v, return as a long long int
+     * e.g. numberize({1,2,3,4}) -> 1234
+     */
     static long long numberize(vector<long long> v) {
         vector<long long> rev_v;
         while (!v.empty()) {
@@ -46,6 +53,13 @@ private:
         return ans;
     }
     
+    /**
+     * Returns true if the given long long int
+     * cannot be made smaller.
+     * Returns false otherwise
+     * e.g. isAscending(1123345567789) -> true
+     * e.g. isAscending(91) -> false
+     */
     static bool isAscending(long long n) {
         vector<long long> v = vectorize(n);
         for (int i = 0; i < v.size() - 1; i++) {
@@ -54,6 +68,16 @@ private:
         return true;
     }
     
+    /**
+     * Naively calculates the best swap from an earlier
+     * position to a later position.
+     * 
+     * Since the algorithm ascends insertion points first,
+     * then removal points, there is no explicit tie-breaking,
+     * because the first lowest solution found is the best,
+     * in accordance with the problem statement's
+     * i, j preferences.
+     */
     static vector<long long> sendBackward(long long n) {
         long long min = LONG_LONG_MAX;
         int best_from = 0;
@@ -77,6 +101,15 @@ private:
         return ans;
     }
     
+    /**
+     * Naively calculates the best swap from a later
+     * position to an earlier position.
+     * 
+     * Ties are broken first with preference for a lower
+     * removal point, and then with preference for a lower
+     * insertion point.  This is in accordance with the
+     * problem statement's i, j preferences.
+     */
     static vector<long long> sendForward(long long n) {
         long long min = LONG_LONG_MAX;
         int best_from = 0;
@@ -93,6 +126,8 @@ private:
                     best_from = i;
                     best_to = j - 1;
                 }
+                
+                // Tie-breaking
                 else if (this_swap == min) {
                     if (i < best_from) {
                         best_from = i;
@@ -112,17 +147,44 @@ private:
     }
 
 public:
+    /**
+     * Given a positive number n, returns the smallest possible
+     * single-digit-move number that can result, along with the
+     * index i from which moved digit came, and index j at which
+     * the moved digit was inserted.
+     * 
+     * e.g. smallest(261235) -> {126235, 2, 0}
+     * e.g. smallest(1000000) -> {1, 0, 6}
+     */
     static vector<long long> smallest(long long n) {
+        
+        // Check if number is already the smallest
         if (isAscending(n)) {
             vector<long long> ans = {n, 0, 0};
             return ans;
         }
+        
+        /**
+         * Naively moving digits backward obtains a different
+         * best answer than does naively moving digits forward.
+         * 
+         * Accordingly, do both, then break ties.
+         */
         vector<long long> backward = sendBackward(n);
         vector<long long> forward = sendForward(n);
+        
+        // If one number is smaller than another
         if (backward[0] < forward[0]) return backward;
         else if (forward[0] < backward[0]) return forward;
+        
+        /**
+         * If the numbers are the same, but one result has
+         * a lower removal point than does the other.
+         */
         else if (forward[1] < backward[1]) return forward;
         else if (backward[1] < forward[1]) return backward;
+        
+        // If results are the same, arbitrarily return one of them
         else return forward;
     }
 };
