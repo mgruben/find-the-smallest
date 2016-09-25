@@ -174,8 +174,8 @@ public:
         vector<long long> forward = sendForward(n);
         
         // If one number is smaller than another
-        if (backward[0] < forward[0]) return backward;
-        else if (forward[0] < backward[0]) return forward;
+        if (forward[0] < backward[0]) return forward;
+        else if (backward[0] < forward[0]) return backward;
         
         /**
          * If the numbers are the same, but one result has
@@ -183,6 +183,13 @@ public:
          */
         else if (forward[1] < backward[1]) return forward;
         else if (backward[1] < forward[1]) return backward;
+        
+        /**
+         * If the removal points are the same, but one result has
+         * a lower insertion point than does the other.
+         */
+        else if (forward[2] < backward[2]) return forward;
+        else if (backward[2] < forward[2]) return backward;
         
         // If results are the same, arbitrarily return one of them
         else return forward;
