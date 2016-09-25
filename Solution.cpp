@@ -70,7 +70,25 @@ public:
     }
     
     static vector<long long> sendForward(long long n) {
-        vector<long long> ans;
+        int min = INT_MAX;
+        int best_from = 0;
+        int best_to = 0;
+        vector<long long> v = vectorize(n);
+        
+        for (int i = v.size() - 1; i > 0; i--) {
+            vector<long long> toSwap = v;
+            for (int j = i; j > 0; j--) {
+                swap(toSwap[j], toSwap[j-1]);
+                int this_swap = numberize(toSwap);
+                if (this_swap < min) {
+                    min = this_swap;
+                    best_from = i;
+                    best_to = j - 1;
+                }
+            }
+        }
+        
+        vector<long long> ans = {min, best_from, best_to};
         return ans;
     }
 
@@ -90,7 +108,7 @@ int main() {
     ToSmallest t;
     //~ cout << toString(t.smallest(187863002809)) << endl;
     //~ cout << toString(t.smallest(261235)) << endl;
-    cout << toString(t.sendBackward(209917)) << endl;
+    cout << toString(t.sendForward(209917)) << endl;
     //~ cout << toString(t.smallest(285365)) << endl;
     //~ cout << toString(t.smallest(269045)) << endl;
     //~ cout << toString(t.smallest(296837)) << endl;
