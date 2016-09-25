@@ -42,11 +42,31 @@ string toString(vector<long long> v) {
     return ans.substr(0, ans.size() - 2) + "}";
 }
 
-class toSmallest {
+class ToSmallest {
 public:
     static vector<long long> sendBackward(long long n) {
-        vector<long long> ans;
+        vector<long long> v = vectorize(n);
+        vector<long long> v_unsorted = v;
+        sort(begin(v), end(v));
         
+        int takeFrom;
+        int insertAt;
+        
+        for (int i = 0; i < v.size(); i++) {
+            if (v[i] != v_unsorted[i]) {
+                for (int j = i + 1; j < v.size(); j++) {
+                    if (v[i] == v_unsorted[j]) {
+                        insertAt = i;
+                        takeFrom = j;
+                        i = j = v.size();
+                    }
+                }
+            }
+        }
+        for (int i = takeFrom; i > insertAt; i--) {
+            swap(v_unsorted[i], v_unsorted[i - 1]);
+        }
+        vector<long long> ans = {numberize(v_unsorted), takeFrom, insertAt};
         return ans;
     }
     
@@ -58,8 +78,11 @@ public:
 };
 
 int main() {
-    cout << numberize(vectorize(261235)) << endl;
-    //~ ToSmallest t;
-    //~ t.smallest(261235);
+    ToSmallest t;
+    cout << toString(t.sendBackward(261235)) << endl;
+    cout << toString(t.sendBackward(285365)) << endl;
+    cout << toString(t.sendBackward(269045)) << endl;
+    cout << toString(t.sendBackward(296837)) << endl;
+
     return 0;
 }
