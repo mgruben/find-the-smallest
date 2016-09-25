@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <limits.h>
 
 using namespace std;
 
@@ -15,7 +16,7 @@ string toString(vector<long long> v) {
 }
 
 class ToSmallest {
-private:
+public:
     static vector<long long> vectorize(long long n) {
         vector<long long> rev_ans;
         while (n) {
@@ -46,61 +47,30 @@ private:
     }
     
     static vector<long long> sendBackward(long long n) {
+        int min = INT_MAX;
+        int best_from = 0;
+        int best_to = 0;
         vector<long long> v = vectorize(n);
-        cout << toString(v) << endl;
-        vector<long long> v_unsorted = v;
-        sort(begin(v), end(v));
-        cout << toString(v) << endl;
         
-        int takeFrom;
-        int insertAt;
-        
-        for (int i = v.size() - 1; i >= 0; i--) {
-            if (v[i] != v_unsorted[i]) {
-                for (int j = 0; j < i; j++) {
-                    if (v[i] == v_unsorted[j]) {
-                        insertAt = i;
-                        takeFrom = j;
-                        j = v.size();
-                        i = -1;
-                    }
+        for (int i = 0; i < v.size() - 1; i++) {
+            vector<long long> toSwap = v;
+            for (int j = i; j < v.size() - 1; j++) {
+                swap(toSwap[j], toSwap[j+1]);
+                int this_swap = numberize(toSwap);
+                if (this_swap < min) {
+                    min = this_swap;
+                    best_from = i;
+                    best_to = j + 1;
                 }
             }
         }
-        for (int i = takeFrom; i < insertAt; i++) {
-            swap(v_unsorted[i], v_unsorted[i + 1]);
-            cout << toString(v_unsorted) << endl;
-        }
-        vector<long long> ans = {numberize(v_unsorted), takeFrom, insertAt};
+        
+        vector<long long> ans = {min, best_from, best_to};
         return ans;
     }
     
     static vector<long long> sendForward(long long n) {
-        vector<long long> v = vectorize(n);
-        cout << toString(v) << endl;
-        vector<long long> v_unsorted = v;
-        sort(begin(v), end(v));
-        cout << toString(v) << endl;
-        
-        int takeFrom;
-        int insertAt;
-        
-        for (int i = 0; i < v.size(); i++) {
-            if (v[i] != v_unsorted[i]) {
-                for (int j = v.size() - 1; j >= i + 1; j--) {
-                    if (v[i] == v_unsorted[j]) {
-                        insertAt = i;
-                        takeFrom = j;
-                        i = j = v.size();
-                    }
-                }
-            }
-        }
-        for (int i = takeFrom; i > insertAt; i--) {
-            swap(v_unsorted[i], v_unsorted[i - 1]);
-            cout << toString(v_unsorted) << endl;
-        }
-        vector<long long> ans = {numberize(v_unsorted), takeFrom, insertAt};
+        vector<long long> ans;
         return ans;
     }
 
@@ -118,12 +88,12 @@ public:
 
 int main() {
     ToSmallest t;
-    cout << toString(t.smallest(187863002809)) << endl;
-    cout << toString(t.smallest(261235)) << endl;
-    cout << toString(t.smallest(209917)) << endl;
-    cout << toString(t.smallest(285365)) << endl;
-    cout << toString(t.smallest(269045)) << endl;
-    cout << toString(t.smallest(296837)) << endl;
-    cout << toString(t.smallest(1717466)) << endl;
+    //~ cout << toString(t.smallest(187863002809)) << endl;
+    //~ cout << toString(t.smallest(261235)) << endl;
+    cout << toString(t.sendBackward(209917)) << endl;
+    //~ cout << toString(t.smallest(285365)) << endl;
+    //~ cout << toString(t.smallest(269045)) << endl;
+    //~ cout << toString(t.smallest(296837)) << endl;
+    //~ cout << toString(t.smallest(1717466)) << endl;
     return 0;
 }
