@@ -85,6 +85,17 @@ private:
                     best_from = i;
                     best_to = j - 1;
                 }
+                else if (this_swap == min) {
+                    if (i < best_from) {
+                        best_from = i;
+                        best_to = j - 1;
+                    }
+                    else if (i == best_from) {
+                        if (j - 1 < best_to) {
+                            best_to = j - 1;
+                        }
+                    }
+                }
             }
         }
         
@@ -106,7 +117,7 @@ public:
 
 int main() {
     ToSmallest t;
-    cout << toString(t.smallest(187863002809)) << endl;
+    cout << toString(t.smallest(4663411)) << endl;
     //~ cout << toString(t.smallest(261235)) << endl;
     //~ cout << toString(t.smallest(209917)) << endl;
     //~ cout << toString(t.smallest(285365)) << endl;
