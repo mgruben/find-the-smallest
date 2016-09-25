@@ -46,6 +46,14 @@ private:
         return ans;
     }
     
+    static bool isAscending(long long n) {
+        vector<long long> v = vectorize(n);
+        for (int i = 0; i < v.size() - 1; i++) {
+            if (v[i] > v[i+1]) return false;
+        }
+        return true;
+    }
+    
     static vector<long long> sendBackward(long long n) {
         long long min = LONG_LONG_MAX;
         int best_from = 0;
@@ -105,6 +113,10 @@ private:
 
 public:
     static vector<long long> smallest(long long n) {
+        if (isAscending(n)) {
+            vector<long long> ans = {n, 0, 0};
+            return ans;
+        }
         vector<long long> backward = sendBackward(n);
         vector<long long> forward = sendForward(n);
         if (backward[0] < forward[0]) return backward;
@@ -117,7 +129,7 @@ public:
 
 int main() {
     ToSmallest t;
-    cout << toString(t.smallest(4663411)) << endl;
+    cout << toString(t.smallest(1122346)) << endl;
     //~ cout << toString(t.smallest(261235)) << endl;
     //~ cout << toString(t.smallest(209917)) << endl;
     //~ cout << toString(t.smallest(285365)) << endl;
