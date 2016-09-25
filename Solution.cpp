@@ -45,7 +45,19 @@ string toString(vector<long long> v) {
 class ToSmallest {
 public:
     static vector<long long> sendBackward(long long n) {
-        vector<long long> ans;
+        vector<long long> v = vectorize(n);
+        
+        int takeFrom = 0;
+        int insertAt = 0;
+        int i = 0;
+        
+        while (i+1 < v.size() && v[i+1] < v[i]) {
+            swap(v[i], v[i+1]);
+            insertAt++;
+            i++;
+        }
+
+        vector<long long> ans = {numberize(v), takeFrom, insertAt};
         return ans;
     }
     
@@ -80,10 +92,11 @@ public:
 int main() {
     ToSmallest t;
     cout << toString(t.sendForward(261235)) << endl;
+    cout << toString(t.sendBackward(209917)) << endl;
     cout << toString(t.sendForward(285365)) << endl;
     cout << toString(t.sendForward(269045)) << endl;
     cout << toString(t.sendForward(296837)) << endl;
-    cout << toString(t.sendForward(1000000)) << endl;
+    cout << toString(t.sendBackward(1000000)) << endl;
 
     return 0;
 }
