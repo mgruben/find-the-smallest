@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -17,6 +18,21 @@ vector<long long> vectorize(long long n) {
     return ans;
 }
 
+long long numberize(vector<long long> v) {
+    vector<long long> rev_v;
+    while (!v.empty()) {
+        rev_v.push_back(v.back());
+        v.pop_back();
+    }
+    long long ans = 0;
+    while (!rev_v.empty()) {
+        ans *= 10;
+        ans += rev_v.back();
+        rev_v.pop_back();
+    }
+    return ans;
+}
+
 string toString(vector<long long> v) {
     string ans = "{";
     for (int i: v) {
@@ -29,17 +45,20 @@ string toString(vector<long long> v) {
 class toSmallest {
 public:
     static vector<long long> sendBackward(long long n) {
-        return vector<long long>;
+        vector<long long> ans;
+        
+        return ans;
     }
     
     static vector<long long> sendForward(long long n){
-        return vector<long long>;
+        vector<long long> ans;
+        return ans;
     }
     static vector<long long> smallest(long long n);
 };
 
 int main() {
-    cout << toString(vectorize(1234)) << endl;
+    cout << numberize(vectorize(261235)) << endl;
     //~ ToSmallest t;
     //~ t.smallest(261235);
     return 0;
