@@ -165,7 +165,7 @@ public:
         }
         
         /**
-         * Naively moving digits backward obtains a different
+         * Naively moving digits backward can obtain a different
          * best answer than does naively moving digits forward.
          * 
          * Accordingly, do both, then break ties.
