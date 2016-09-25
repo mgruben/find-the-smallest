@@ -7,7 +7,7 @@ using namespace std;
 
 string toString(vector<long long> v) {
     string ans = "{";
-    for (int i: v) {
+    for (long long i: v) {
         ans += to_string(i);
         ans += ", ";
     }
@@ -52,20 +52,24 @@ private:
         int insertAt = 0;
         int i = 0;
         
-        while (i+1 < v.size() && v[i+1] < v[i]) {
+        while (i+1 < v.size() && v[i+1] <= v[i]) {
             swap(v[i], v[i+1]);
             insertAt++;
             i++;
         }
-
+        
+        cout << toString(v) << endl;
+        
         vector<long long> ans = {numberize(v), takeFrom, insertAt};
         return ans;
     }
     
     static vector<long long> sendForward(long long n) {
         vector<long long> v = vectorize(n);
+        cout << toString(v) << endl;
         vector<long long> v_unsorted = v;
         sort(begin(v), end(v));
+        cout << toString(v) << endl;
         
         int takeFrom;
         int insertAt;
@@ -83,6 +87,7 @@ private:
         }
         for (int i = takeFrom; i > insertAt; i--) {
             swap(v_unsorted[i], v_unsorted[i - 1]);
+            cout << toString(v_unsorted) << endl;
         }
         vector<long long> ans = {numberize(v_unsorted), takeFrom, insertAt};
         return ans;
@@ -102,12 +107,7 @@ public:
 
 int main() {
     ToSmallest t;
-    cout << toString(t.smallest(261235)) << endl;
-    cout << toString(t.smallest(209917)) << endl;
-    cout << toString(t.smallest(285365)) << endl;
-    cout << toString(t.smallest(269045)) << endl;
-    cout << toString(t.smallest(296837)) << endl;
-    cout << toString(t.smallest(1000000)) << endl;
+    cout << toString(t.smallest(187863002809)) << endl;
 
     return 0;
 }
