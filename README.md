@@ -1,7 +1,9 @@
 # find-the-smallest
-Find the smallest number resulting from a single digit move
+Find the smallest number resulting from a single digit move.
 
 Given a positive number `n`, from which any single digit can be removed and replaced elsewhere, find the smallest number which would result from one such move.
+
+Also return the removal index and the insertion index which describe the move.
 
 In the event that the same number could be obtained by more than one move:
 * Prefer a smaller removal index over a larger removal index, then
