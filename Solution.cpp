@@ -45,6 +45,11 @@ string toString(vector<long long> v) {
 class ToSmallest {
 public:
     static vector<long long> sendBackward(long long n) {
+        vector<long long> ans;
+        return ans;
+    }
+    
+    static vector<long long> sendForward(long long n) {
         vector<long long> v = vectorize(n);
         vector<long long> v_unsorted = v;
         sort(begin(v), end(v));
@@ -69,20 +74,16 @@ public:
         vector<long long> ans = {numberize(v_unsorted), takeFrom, insertAt};
         return ans;
     }
-    
-    static vector<long long> sendForward(long long n){
-        vector<long long> ans;
-        return ans;
-    }
     static vector<long long> smallest(long long n);
 };
 
 int main() {
     ToSmallest t;
-    cout << toString(t.sendBackward(261235)) << endl;
-    cout << toString(t.sendBackward(285365)) << endl;
-    cout << toString(t.sendBackward(269045)) << endl;
-    cout << toString(t.sendBackward(296837)) << endl;
+    cout << toString(t.sendForward(261235)) << endl;
+    cout << toString(t.sendForward(285365)) << endl;
+    cout << toString(t.sendForward(269045)) << endl;
+    cout << toString(t.sendForward(296837)) << endl;
+    cout << toString(t.sendForward(1000000)) << endl;
 
     return 0;
 }
