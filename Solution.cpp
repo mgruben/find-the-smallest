@@ -16,7 +16,7 @@ string toString(vector<long long> v) {
 }
 
 class ToSmallest {
-public:
+private:
     static vector<long long> vectorize(long long n) {
         vector<long long> rev_ans;
         while (n) {
@@ -47,7 +47,7 @@ public:
     }
     
     static vector<long long> sendBackward(long long n) {
-        int min = INT_MAX;
+        long long min = LONG_LONG_MAX;
         int best_from = 0;
         int best_to = 0;
         vector<long long> v = vectorize(n);
@@ -56,7 +56,7 @@ public:
             vector<long long> toSwap = v;
             for (int j = i; j < v.size() - 1; j++) {
                 swap(toSwap[j], toSwap[j+1]);
-                int this_swap = numberize(toSwap);
+                long long this_swap = numberize(toSwap);
                 if (this_swap < min) {
                     min = this_swap;
                     best_from = i;
@@ -70,7 +70,7 @@ public:
     }
     
     static vector<long long> sendForward(long long n) {
-        int min = INT_MAX;
+        long long min = LONG_LONG_MAX;
         int best_from = 0;
         int best_to = 0;
         vector<long long> v = vectorize(n);
@@ -79,7 +79,7 @@ public:
             vector<long long> toSwap = v;
             for (int j = i; j > 0; j--) {
                 swap(toSwap[j], toSwap[j-1]);
-                int this_swap = numberize(toSwap);
+                long long this_swap = numberize(toSwap);
                 if (this_swap < min) {
                     min = this_swap;
                     best_from = i;
@@ -106,9 +106,9 @@ public:
 
 int main() {
     ToSmallest t;
-    //~ cout << toString(t.smallest(187863002809)) << endl;
+    cout << toString(t.smallest(187863002809)) << endl;
     //~ cout << toString(t.smallest(261235)) << endl;
-    cout << toString(t.sendForward(209917)) << endl;
+    //~ cout << toString(t.smallest(209917)) << endl;
     //~ cout << toString(t.smallest(285365)) << endl;
     //~ cout << toString(t.smallest(269045)) << endl;
     //~ cout << toString(t.smallest(296837)) << endl;
